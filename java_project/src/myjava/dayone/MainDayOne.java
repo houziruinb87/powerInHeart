@@ -1,5 +1,7 @@
 package myjava.dayone;
 
+import myjava.day2.Day2;
+
 import java.util.Arrays;
 
 // Press ⇧ twice to open the Search Everywhere dialog and type `show whitespaces`,
