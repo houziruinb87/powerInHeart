@@ -13,7 +13,10 @@ public class Day3 {
 
     /**
      * 返回左索引和右索引
-     *
+     * 分层算法
+     * 输入一个数列,和一个左右索引
+     * 此算法以输入的右索引的值为标杆
+     * 将次数列中{leftPosition-rightPosition}范围内的数组进行分层
      * @param array
      * @return
      */
