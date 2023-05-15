@@ -84,6 +84,7 @@ public class Day3 {
      */
     public static void quickSortByPartition(int[] array, int leftPosition, int rightPosition) {
       if(leftPosition<rightPosition){
+          //为了让时间复杂度为O(NlogN),在当前数列随机取一个数,与末尾的数交换,然后在分层时,以末尾数为标杆数进行分层.
           int  numPosition = (((new Random().nextInt(rightPosition-leftPosition+1))) + leftPosition);
           System.out.println("随机索引为" + numPosition);
           swap(array,numPosition,rightPosition);
