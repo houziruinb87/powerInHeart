@@ -73,4 +73,18 @@ public class Day5 {
 
         return array;
     }
+
+
+    public static int[] process(int[] array,int l,int r){
+        if(l==r){
+            return new int[]{array[l]};
+        }
+        int[] leftArray = process(array,l,l+(r-l)/2);
+        int[] rightArray = process(array,l+(r-l)/2+1,r);
+        return mergeArray(leftArray,rightArray);
+    }
+
+    public static int[] mergeArray(int[] leftArray,int[] rightArray){
+        return leftArray;
+    }
 }
