@@ -12,10 +12,15 @@ public class MainDay8 {
  public static    int[] array3={8,6,5,1,5,4,3,2};
 
     public static void main(String[] args) {
-        Node nodeByValue3 = Day8.createNodeByValue(3);
-        Day8.printNode(nodeByValue3);
-        Node reversedNodeList = Day8.reverseNodeList(nodeByValue3);
-        Day8.printNode(reversedNodeList);
+//        Node nodeByValue3 = Day8.createSingleNodeByValue(3);
+//        Day8.printNode(nodeByValue3);
+//        Node reversedNodeList = Day8.reverseNodeList(nodeByValue3);
+//        Day8.printNode(reversedNodeList);
+
+        Node doubleNodeByValue = Day8.createDoubleNodeByValue(3);
+        Day8.printNode(doubleNodeByValue);
+        Node reversDoubleNodeList = Day8.reversDoubleNodeList(doubleNodeByValue);
+        Day8.printNode(reversDoubleNodeList);
 
 //       System.out.println(Arrays.toString(Day4.partition(array,0,array.length-1)));
 //       System.out.println(Arrays.toString(Day7.heapSort(array)));
