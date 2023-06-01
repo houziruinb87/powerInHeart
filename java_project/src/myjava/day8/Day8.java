@@ -6,6 +6,8 @@ import java.util.Stack;
  * 链表问题,一般先判断是否为环形链表
  * 还需要再判断这个环形链表是否为首尾相接
  * 从而区分找到入环的节点
+ *
+ * 通过快慢指针,找到非环链表中点,然后逆转后半部分,然后判断是否为回文结构
  */
 class Node {
     public int value;
@@ -215,6 +217,7 @@ public class Day8 {
      * 判断一个链表是否为环
      * 如果非环返回null
      * 如果为环返回入环节点(考虑到了首尾相接)
+     *
      * @param head
      * @return
      */
@@ -280,19 +283,69 @@ public class Day8 {
 
     /**
      * 继续维持环结构
+     *
      * @param head
      * @param enterNode
      * @return
      */
-    public static boolean continueCircle(Node head,Node enterNode){
+    public static boolean continueCircle(Node head, Node enterNode) {
         Node current = head;
-        while (current!=null){
-            if(current.next == null){
+        while (current != null) {
+            if (current.next == null) {
                 current.next = enterNode;
-                return  true;
+                return true;
             }
             current = current.next;
         }
         return false;
+    }
+
+    /**
+     *
+     */
+    public static boolean isPalindromeByReverse(Node head) {
+        Node fast = head;
+        Node slow = head;
+        while (fast != null && slow != null) {
+            if (fast.next == null || fast.next.next == null) {
+                break;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+//        中点为slow,从slow的下一个开始逆序,然后将slow的next指向null,
+        Node pre = null;
+        Node cur = slow.next;
+        Node curNext;
+        while (cur != null) {
+            curNext = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = curNext;
+        }
+//此时pre是第二个链表的头
+        Node lastHead = pre;
+        Node originHead = head;
+        while (lastHead != null) {
+            if (lastHead.value != originHead.value) {
+                return false;
+            }
+            lastHead = lastHead.next;
+            originHead = originHead.next;
+        }
+//        将之前逆转的再变回去
+        Node lastPre = null;
+        Node lastCur = pre;
+        Node lastCurNext;
+        while (lastCur!=null){
+            lastCurNext = lastCur.next;
+            lastCur.next = lastPre;
+            lastPre = lastCur;
+            lastCur = lastCurNext;
+        }
+//        将之前slow的next指针指向后边的头(lastPre)
+        slow.next = lastPre;
+        return true;
     }
 }
