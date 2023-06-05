@@ -348,4 +348,77 @@ public class Day8 {
         slow.next = lastPre;
         return true;
     }
+
+    public static void a(Node head){
+        Node cur = head;
+        Node pre = null;
+        Node curNext ;
+        while (cur!=null){
+           curNext= cur.next;
+           cur.next =cur.last;
+           cur.last = curNext;
+           cur = curNext;
+        }
+    }
+
+    /**
+     * 判断两个环是否相交(非环)
+     */
+    public static Node isMeet(Node head1,Node head2){
+      Node last1;
+      Node last2;
+      Node cur1 = head1;
+      Node cur2 = head2;
+      int length1=1;
+      int length2=1;
+      while (cur1.next!=null){
+          length1++;
+          cur1 = cur1.next;
+      }
+      last1 = cur1;
+        while (cur2.next!=null){
+            length2++;
+            cur2 = cur2.next;
+        }
+        last2 = cur2;
+
+        cur1 = head1;
+        cur2 = head2;
+        if(last1==last2){
+            if(length1>length2){
+             int needMoveLength = length1-length2;
+             while (needMoveLength>0){
+                 cur1 = cur1.next;
+                 needMoveLength--;
+             }
+             while (cur1.next!=null && cur2.next!=null){
+                 if(cur1 == cur2){
+                     break;
+                 }
+                 cur1 = cur1.next;
+                 cur2 = cur2.next;
+             }
+             return  cur1;
+            }else if(length1<length2){
+                int needMoveLength = length2-length1;
+                while (needMoveLength>0){
+                    cur2 = cur2.next;
+                    needMoveLength--;
+                }
+                while (cur1.next!=null && cur2.next!=null){
+                    if(cur1 == cur2){
+                        break;
+                    }
+                    cur1 = cur1.next;
+                    cur2 = cur2.next;
+                }
+                return  cur1;
+            }else {
+                return  last1;
+            }
+        }else {
+            return null;
+        }
+    }
+
 }

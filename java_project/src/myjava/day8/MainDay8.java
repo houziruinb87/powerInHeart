@@ -89,29 +89,59 @@ public class MainDay8 {
 
 
 //判断是否为回文
+//        Node node0 = new Node(0);
+//        Node node1 = new Node(1);
+//        Node node2 = new Node(2);
+//        Node node3 = new Node(3);
+//        Node node4 = new Node(4);
+//        Node node4_3 = new Node(3);
+//        Node node5_2 = new Node(2);
+//        Node node6_1 = new Node(1);
+//        Node node7_0 = new Node(0);
+//        Node node8_0 = new Node(3);
+//        node0.next = node1;
+//        node1.next = node2;
+//        node2.next = node3;
+//        node3.next = node4_3;
+//        node4_3.next = node5_2;
+//        node5_2.next = node6_1;
+//        node6_1.next = node7_0;
+//        node7_0.next = node8_0;
+////        node7_0.next = node0;
+//        if (Day8.isPalindromeByReverse(node0)) {
+//            System.out.println("是回文");
+//        } else {
+//            System.out.println("不是回文");
+//        }
+//
+
+
+        //两个链表是否相交,并返回相交节点
+
         Node node0 = new Node(0);
         Node node1 = new Node(1);
         Node node2 = new Node(2);
         Node node3 = new Node(3);
         Node node4 = new Node(4);
-        Node node4_3 = new Node(3);
-        Node node5_2 = new Node(2);
-        Node node6_1 = new Node(1);
-        Node node7_0 = new Node(0);
-        Node node8_0 = new Node(3);
+        Node node5 = new Node(5);
+
+
+        Node node3_1 = new Node(33);
+        Node node3_2 = new Node(32);
+
         node0.next = node1;
         node1.next = node2;
         node2.next = node3;
-        node3.next = node4_3;
-        node4_3.next = node5_2;
-        node5_2.next = node6_1;
-        node6_1.next = node7_0;
-        node7_0.next = node8_0;
-//        node7_0.next = node0;
-        if (Day8.isPalindromeByReverse(node0)) {
-            System.out.println("是回文");
+        node3.next = node4;
+        node4.next = node5;
+
+        node3_1.next=node2;
+
+        if (Day8.isMeet(node0,node3_1)!=null) {
+            System.out.println("相遇");
+            System.out.println("相遇节点为"+Day8.isMeet(node0,node3_1).value);
         } else {
-            System.out.println("不是回文");
+            System.out.println("不相遇");
         }
     }
 
