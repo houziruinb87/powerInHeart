@@ -10,7 +10,10 @@ public class MainDay10 {
     public static void main(String[] args) {
         NodeTree fullBTHead = Day10.createFullBT();
 //        Day10.processNode(fullBTHead);
-        Day10.processNode2(fullBTHead);
+//        Day10.processNode2(fullBTHead);
+//        Day10.processNode3(fullBTHead);
+        Day10.processMiddle(fullBTHead);
+//        System.out.println("当前最宽有多少个节点--"+ Day10.getWidth(fullBTHead));
 
     }
 
