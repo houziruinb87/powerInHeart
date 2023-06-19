@@ -6,6 +6,8 @@ import java.util.Random;
  * mergeSort
  * quickSort
  * heapSort
+ *
+ * heapSort时,在heapify之前swap,然后记得heapify中的heapSize这个参数的值就变成了原来heapSize-1
  */
 public class Day7 {
     public static void swap(int[] array, int i, int j) {
@@ -124,47 +126,46 @@ public class Day7 {
         }
     }
 
-    public static void heapify(int[] array,int position,int heapSize){
-        if(heapSize<2){
-            return;
-        }
-        while (position < heapSize){
-            int leftChildP = position*2+1;
-            int rightChildP = position*2+2;
-            if(leftChildP>heapSize-1){
-                break;
+    public static void heapify(int[] array, int position, int heapSize) {
+        while (position < heapSize) {
+            int leftChildPosition = position * 2 + 1;
+            int rightChildPosition = position * 2 + 2;
+            if (leftChildPosition >= heapSize) {
+                return;
             }
-            if(rightChildP > heapSize-1){
-                if(array[leftChildP]>array[position]){
-                    swap(array,position,leftChildP);
+            if (leftChildPosition < heapSize && rightChildPosition >= heapSize) {
+                if (array[position] < array[leftChildPosition]) {
+                    position = leftChildPosition;
+                    swap(array, position, leftChildPosition);
                 }
-                break;
+                return;
             }
-            int max ;
-            int maxPosition ;
-            if(array[leftChildP]>=array[rightChildP]){
-                max = array[leftChildP];
-                maxPosition = leftChildP;
-            }else {
-                max=array[rightChildP];
-                maxPosition = rightChildP;
+
+            int maxChild = array[rightChildPosition];
+            int maxChildPosition = rightChildPosition;
+            if (array[leftChildPosition] >= array[rightChildPosition]) {
+                maxChild = array[leftChildPosition];
+                maxChildPosition = leftChildPosition;
             }
-            if(max >array[position]){
-                swap(array,position,maxPosition);
+
+            if (array[position] < maxChild) {
+                swap(array, position, maxChildPosition);
+
             }
-            position = maxPosition;
+            position = maxChildPosition;
+
         }
     }
-    public static int[] heapSort(int[] array){
-        int heapSize =0;
-        for(;heapSize<array.length;heapSize++){
-            heapInsert(array,heapSize);
-        }
 
-        for(;heapSize>1;heapSize--){
-            swap(array,0,heapSize-1);
-            heapify(array,0,heapSize-1);
-        }
-        return array;
+    public static int[] heapSort(int[] array) {
+      int heapSize =0;
+      for(;heapSize<array.length;heapSize++){
+          heapInsert(array,heapSize);
+      }
+      for (;heapSize>0;heapSize--){
+          swap(array,0,heapSize-1);
+          heapify(array,0,heapSize-1);
+      }
+      return  array;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Stack;
  * 链表问题,一般先判断是否为环形链表
  * 还需要再判断这个环形链表是否为首尾相接
  * 从而区分找到入环的节点
- *
+ * <p>
  * 通过快慢指针,找到非环链表中点,然后逆转后半部分,然后判断是否为回文结构
  */
 class Node {
@@ -63,18 +63,18 @@ public class Day8 {
      */
     public static Node reverseNodeList(Node node) {
         if (node != null && node.next != null) {
-            Node pre = null;
-            Node current = node;
+            Node cur = node;
             Node curNext;
+            Node pre = null;
             Node newHead = null;
-            while (current != null) {
-                if (current.next == null) {
-                    newHead = current;
+            while (cur != null) {
+                curNext = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = curNext;
+                if (cur == null) {
+                    newHead = pre;
                 }
-                curNext = current.next;
-                current.next = pre;
-                pre = current;
-                current = curNext;
             }
             return newHead;
         } else {
@@ -338,7 +338,7 @@ public class Day8 {
         Node lastPre = null;
         Node lastCur = pre;
         Node lastCurNext;
-        while (lastCur!=null){
+        while (lastCur != null) {
             lastCurNext = lastCur.next;
             lastCur.next = lastPre;
             lastPre = lastCur;
@@ -349,34 +349,34 @@ public class Day8 {
         return true;
     }
 
-    public static void a(Node head){
+    public static void a(Node head) {
         Node cur = head;
         Node pre = null;
-        Node curNext ;
-        while (cur!=null){
-           curNext= cur.next;
-           cur.next =cur.last;
-           cur.last = curNext;
-           cur = curNext;
+        Node curNext;
+        while (cur != null) {
+            curNext = cur.next;
+            cur.next = cur.last;
+            cur.last = curNext;
+            cur = curNext;
         }
     }
 
     /**
      * 判断两个环是否相交(非环)
      */
-    public static Node isMeet(Node head1,Node head2){
-      Node last1;
-      Node last2;
-      Node cur1 = head1;
-      Node cur2 = head2;
-      int length1=1;
-      int length2=1;
-      while (cur1.next!=null){
-          length1++;
-          cur1 = cur1.next;
-      }
-      last1 = cur1;
-        while (cur2.next!=null){
+    public static Node isMeet(Node head1, Node head2) {
+        Node last1;
+        Node last2;
+        Node cur1 = head1;
+        Node cur2 = head2;
+        int length1 = 1;
+        int length2 = 1;
+        while (cur1.next != null) {
+            length1++;
+            cur1 = cur1.next;
+        }
+        last1 = cur1;
+        while (cur2.next != null) {
             length2++;
             cur2 = cur2.next;
         }
@@ -384,39 +384,39 @@ public class Day8 {
 
         cur1 = head1;
         cur2 = head2;
-        if(last1==last2){
-            if(length1>length2){
-             int needMoveLength = length1-length2;
-             while (needMoveLength>0){
-                 cur1 = cur1.next;
-                 needMoveLength--;
-             }
-             while (cur1.next!=null && cur2.next!=null){
-                 if(cur1 == cur2){
-                     break;
-                 }
-                 cur1 = cur1.next;
-                 cur2 = cur2.next;
-             }
-             return  cur1;
-            }else if(length1<length2){
-                int needMoveLength = length2-length1;
-                while (needMoveLength>0){
-                    cur2 = cur2.next;
+        if (last1 == last2) {
+            if (length1 > length2) {
+                int needMoveLength = length1 - length2;
+                while (needMoveLength > 0) {
+                    cur1 = cur1.next;
                     needMoveLength--;
                 }
-                while (cur1.next!=null && cur2.next!=null){
-                    if(cur1 == cur2){
+                while (cur1.next != null && cur2.next != null) {
+                    if (cur1 == cur2) {
                         break;
                     }
                     cur1 = cur1.next;
                     cur2 = cur2.next;
                 }
-                return  cur1;
-            }else {
-                return  last1;
+                return cur1;
+            } else if (length1 < length2) {
+                int needMoveLength = length2 - length1;
+                while (needMoveLength > 0) {
+                    cur2 = cur2.next;
+                    needMoveLength--;
+                }
+                while (cur1.next != null && cur2.next != null) {
+                    if (cur1 == cur2) {
+                        break;
+                    }
+                    cur1 = cur1.next;
+                    cur2 = cur2.next;
+                }
+                return cur1;
+            } else {
+                return last1;
             }
-        }else {
+        } else {
             return null;
         }
     }
