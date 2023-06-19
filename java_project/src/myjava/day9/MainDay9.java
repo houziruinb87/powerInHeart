@@ -13,7 +13,9 @@ public class MainDay9 {
 
     public static void main(String[] args) {
 //       System.out.println(Arrays.toString(Day4.partition(array,0,array.length-1)));
-       System.out.println(Arrays.toString(Day9.heapSort(array)));
+//       System.out.println(Arrays.toString(Day9.mergeSort(array)));
+       System.out.println(Arrays.toString(Day9.quickSort(array)));
+//       System.out.println(Arrays.toString(Day9.heapSort(array)));
 //       System.out.println(Arrays.toString(Day7.heapSort(array)));
 //       System.out.println(Arrays.toString(Day6.heapInsert(array3,3)));
 //       System.out.println(Arrays.toString(Day6.heapify(array3,3,array3.length)));

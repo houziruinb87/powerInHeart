@@ -4,6 +4,10 @@ import java.util.Random;
 
 //partitionArray中的左列表中的👉🏻节点记得-1
 //partitionArray中的右列表中的起始节点记得+1
+
+/***/
+//mergeSort中,merged的起始索引为0,不是left
+//mergeSort中,merged左列表或者右列表索引超过了mid或者right才将剩余的全部加上(非=时,而是=+1时)
 public class Day9 {
     public static void swap(int[] array, int i, int j) {
         if (i == j) {
@@ -14,151 +18,97 @@ public class Day9 {
         array[i] = array[i] ^ array[j];
     }
 
-    public static void merge(int[] array, int l, int r) {
-        if (l == r) {
+
+    public static int[] mergeSort(int[] array) {
+        process(array, 0, array.length - 1);
+        return array;
+    }
+
+    public static void process(int[] array, int left, int right) {
+        if (left == right) {
             return;
         }
-        int m = l + (r - l) / 2;
-        int leftP = l;
-        int rightP = m + 1;
-        int p = 0;
-        int[] mergedArray = new int[r - l + 1];
-        while (leftP <= m || rightP <= r) {
-            if (leftP > m) {
-                mergedArray[p++] = array[rightP++];
+        process(array, left, (right - left) / 2 + left);
+        process(array, (right - left) / 2 + left + 1, right);
+        merge(array, left, right);
+    }
+
+    public static void merge(int[] array, int left, int right) {
+        int leftP = left;
+        int mid = (right - left) / 2 + left;
+        int rightP = mid + 1;
+        int[] mergedArray = new int[right - left + 1];
+        int mergedP = 0;
+        while (leftP <= mid || rightP <= right) {
+            if (leftP == mid + 1) {
+                mergedArray[mergedP++] = array[rightP++];
                 continue;
             }
-            if (rightP > r) {
-                mergedArray[p++] = array[leftP++];
+            if (rightP == right + 1) {
+                mergedArray[mergedP++] = array[leftP++];
                 continue;
             }
             if (array[leftP] <= array[rightP]) {
-                mergedArray[p++] = array[leftP++];
+                mergedArray[mergedP++] = array[leftP++];
             } else {
-                mergedArray[p++] = array[rightP++];
+                mergedArray[mergedP++] = array[rightP++];
             }
-
         }
         for (int i = 0; i < mergedArray.length; i++) {
-            array[l + i] = mergedArray[i];
+            array[left + i] = mergedArray[i];
         }
-    }
 
-    public static void processArray(int[] array, int l, int r) {
-        if (l == r) {
-            return;
-        }
-        processArray(array, l, l + (r - l) / 2);
-        processArray(array, l + (r - l) / 2 + 1, r);
-        merge(array, l, r);
-    }
-
-    public static int[] mergeSort(int[] array) {
-        processArray(array, 0, array.length - 1);
-        return array;
     }
 
 
-    public static int[] partition(int[] array, int l, int r) {
-        int num = array[r];
-        int leftP = l;
-        int currentP = l;
-        int rightP = r;
-        while (currentP <= rightP) {
-            if (array[currentP] < num) {
-                swap(array, leftP++, currentP++);
-            } else if (array[currentP] == num) {
-                currentP++;
+    public static int[] partition(int[] array, int left, int right) {
+
+        int leftP = left;
+        int currP = left;
+        int rightP = right;
+
+        int num = array[right];
+        while (currP <= rightP) {
+
+            if (array[currP] < num) {
+                swap(array, left, currP);
+                currP++;
+                leftP++;
+            } else if (array[currP] == num) {
+                currP++;
             } else {
-                swap(array, currentP, rightP--);
+                swap(array, rightP, currP);
+                rightP--;
             }
-        }
-        return new int[]{leftP, rightP};
-    }
 
-    //partitionArray中的左列表中的👉🏻节点记得-1
-    //partitionArray中的右列表中的起始节点记得+1
-    public static void partitionArray(int[] array, int l, int r) {
-        if (l >= r) {
-            return;
         }
-//l-r范围挑选随机数,与r替换
-        Random random = new Random();
-        int randomNum
-                = random.nextInt(r - l + 1);
-        int randomPosition = randomNum + l;
-        swap(array, randomPosition, r);
-        int[] partitionPosition = partition(array, l, r);
-        partitionArray(array, l, partitionPosition[0] - 1);
-        partitionArray(array, partitionPosition[1] + 1, r);
-    }
+        return new int[]{leftP-1,rightP+1};
 
-    public static int[] quickSort(int[] array) {
-        partitionArray(array, 0, array.length - 1);
-        return array;
     }
 
 
-    public static void heapInsert(int[] array, int position) {
-        while ((position - 1) / 2 < position) {
-            if (array[(position - 1) / 2] < array[position]) {
-                swap(array, (position - 1) / 2, position);
-            }
-            position = (position - 1) / 2;
+    public static void sortByPartition(int[] array,int left,int right){
+        if(right>=left){
+            int[] partition = partition(array, left, right);
+            sortByPartition(array,left,partition[0]);
+            sortByPartition(array,partition[1],right);
+
         }
+
     }
-
-    public static void heapify(int[] array, int position, int heapSize) {
-        while (position < heapSize) {
-            int leftChildP = position * 2 + 1;
-            int rightChildP = position * 2 + 2;
-
-            //左child越界,
-            if (leftChildP > heapSize - 1) {
-                return;
-            }
-           //左child没越界,右边child越界
-            if (rightChildP > heapSize - 1) {
-                if (array[position] < array[leftChildP]) {
-                    swap(array, position, leftChildP);
-                }
-                position = leftChildP;
-                return;
-            }
-
-//            都没越界
-            int leftChild =array[leftChildP];
-            int rightChild =array[rightChildP];
-            int maxPosition;
-            int maxChild;
-            if(leftChild>=rightChild){
-                maxPosition =leftChildP;
-                maxChild =leftChild;
-            }else {
-                maxPosition =rightChildP;
-                maxChild =rightChild;
-            }
-            if(maxChild>array[position]){
-                swap(array,position,maxPosition);
-            }
-            position = maxPosition;
-
-        }
-    }
-
-    public static int[] heapSort(int[] array){
-        int heapSize =0;
-        for(;heapSize<array.length;heapSize++){
-            heapInsert(array,heapSize);
-        }
-
-        for(;heapSize>0;heapSize--){
-            swap(array,0,heapSize-1);
-            heapify(array,0,heapSize-1);
-        }
+    public static int[] quickSort(int []array){
+        sortByPartition(array,0,array.length-1);
         return  array;
     }
 
 
+    public static void heapInsert(int[] array ,int position){
+       int parentPosition= (position -1)/2;
+       while((position -1)/2  < position){
+         if(array[(position -1)/2]<array[position]){
+             swap(array,(position -1)/2,position);
+         }
+       }
+    }
 
 }
