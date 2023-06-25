@@ -421,4 +421,26 @@ public class Day8 {
         }
     }
 
+
+
+
+    public static Node isThisCircle(Node head){
+        Node cur = head;
+        Node slowP =head;
+        Node  fastP = head;
+        Node meetNode = null;
+
+        while (fastP!=null && fastP.next!=null){
+            if(fastP == slowP){
+                meetNode = fastP;
+                break;
+            }
+            fastP = fastP.next.next;
+            slowP = slowP.next;
+        }
+
+        return  meetNode;
+
+    }
+
 }

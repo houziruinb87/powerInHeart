@@ -1,6 +1,7 @@
 package myjava.day7;
 
 import myjava.day6.Day6;
+import myjava.day9.Day9;
 
 import java.util.Arrays;
 
@@ -13,11 +14,18 @@ public class MainDay7 {
 
     public static void main(String[] args) {
 //       System.out.println(Arrays.toString(Day4.partition(array,0,array.length-1)));
-       System.out.println(Arrays.toString(Day7.heapSort(array)));
+//       System.out.println(Arrays.toString(Day7.heapSort(array)));
 //       System.out.println(Arrays.toString(Day6.heapInsert(array3,3)));
 //       System.out.println(Arrays.toString(Day6.heapify(array3,3,array3.length)));
 //       System.out.println(Day4.findMaxNumByProcess(array)+"");
 
+
+//        System.out.println(Arrays.toString(Day7_1.mergeSort(array)));
+       System.out.println(Arrays.toString(Day7_1.quickSort(array)));
+        System.out.println(Arrays.toString(Day9.quickSort(array)));
+
+
+//
     }
 
 
